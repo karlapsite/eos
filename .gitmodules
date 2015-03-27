@@ -1,0 +1,3 @@
+[submodule "Scripts/bin-bash"]
+	path = Scripts/bin-bash
+	url = https://github.com/karlapsite/bin-bash
