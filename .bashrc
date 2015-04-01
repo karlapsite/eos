@@ -65,16 +65,22 @@ export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWSTASHSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
 
-if [ "$color_prompt" = yes ]; then
-    NC='\e[0m'
-    C11='\e[1;32m'
-    C13='\e[1;34m'
-    export GIT_PS1_SHOWCOLORHINTS=1
-    PS1='${debian_chroot:+($debian_chroot)}\['$C11'\]\u@\h\['$NC'\]:\['$C13'\]\w\['$NC'\]$(echo -en `__git_ps1 ":(%s)" 2>/dev/null`)'$NC'\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w$(echo -en `__git_ps1 ":(%s)" 2>/dev/null`)\$ '
-fi
-unset color_prompt force_color_prompt
+set_bash_prompt()
+{
+    if [ "$color_prompt" = yes ]; then
+        RESET='\[\e[0m\]'
+        C11='\[\e[1;32m\]'
+        C13='\[\e[1;34m\]'
+        export GIT_PS1_SHOWCOLORHINTS=1
+        PS1="${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
+    else
+        PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
+    fi
+}
+
+# This tells bash to reinterpret PS1 after every command, which we need because
+# __git_ps1 could be outputting color codes
+PROMPT_COMMAND=set_bash_prompt
 
 # If this is an xterm set the title to user@host:dir
 case "$TERM" in

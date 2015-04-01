@@ -23,7 +23,12 @@ NC='\e[0m'
 function wrap_make() 
 {
     clear;
-    make "$@" && echo -e ${green}make: Success!${NC} || echo -e ${red}make: Something isn\'t very happy${NC};
+    /usr/bin/make "$@"
+    if [[ $? -eq 0 ]] ; then
+        echo -e $green"make: Success!"$NC
+    else
+        echo -e $red"make: Something isn\'t very happy"$NC
+    fi
 }
 
 function wrap_dts()
@@ -106,3 +111,6 @@ if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
     export GOPATH=~/go
 fi
+
+# Directory traversal
+alias github='mkdir -p ~/Github && cd ~/Github'
