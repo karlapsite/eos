@@ -96,10 +96,12 @@ export EDITOR="vim"
 
 # Aliases
 # Startup
-alias rc='vim /home/arlx/.bashrc'
-alias rcs='vim /home/arlx/.bashrc && source /home/arlx/.bashrc'
-alias rca='vim /home/arlx/.bash_aliases'
-alias rcas='vim /home/arlx/.bash_aliases && source /home/arlx/.bash_aliases'
+alias rc='vim ~/.bashrc'
+alias rcs='vim ~/.bashrc && source ~/.bashrc'
+alias rca='vim ~/.bash_aliases'
+alias rcas='vim ~/.bash_aliases && source ~/.bash_aliases'
+alias rcam='vim ~/.more_bash_aliases'
+alias rcams='vim ~/.more_bash_aliases && source ~/.bash_aliases'
 
 # Tools
 alias ack='ack-grep'
@@ -112,6 +114,10 @@ alias copy='wrap_copy'
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
     export GOPATH=~/go
+fi
+
+if [ -e ~/.more_bash_aliases ]; then
+    . ~/.more_bash_aliases
 fi
 
 # Directory traversal
