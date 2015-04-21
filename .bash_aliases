@@ -28,7 +28,7 @@ function wrap_make()
         echo -e $green"make: Success!"$NC
         return 0
     else
-        echo -e $red"make: Something isn\'t very happy"$NC
+        echo -e $red"make: Something isn't very happy"$NC
         return 1
     fi
 }
