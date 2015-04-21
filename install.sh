@@ -1,17 +1,14 @@
 #!/bin/bash
+function replace
+{
+    if [[ -e $1 ]] ; then
+        rm -r ~/$1
+        ln -s `pwd`/$1 ~/$1
+    fi
+}
 
-if [[ -e .bashrc ]] ; then
-    rm -r ~/.bashrc
-    ln -s `pwd`/.bashrc ~/.bashrc
-fi
-
-if [[ -e .bash_aliases ]] ; then
-    rm -r ~/.bash_aliases
-    ln -s `pwd`/.bash_aliases ~/.bash_aliases
-fi
-
-if [[ -e .bash_logout ]] ; then
-    rm -r ~/.bash_logout
-    ln -s `pwd`/.bash_logout ~/.bash_logout
-fi
+replace .bashrc
+replace .bash_aliases
+replace .bash_logout
+replace .vimrc
 
