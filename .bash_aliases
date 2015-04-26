@@ -87,8 +87,7 @@ function wrap_copy()
         echo -e ${red}"file '"$1"' does not exist."${nc}
         return 1
     fi
-    #cat $1 | xclip -i -selection clipboard
-    cat $1 | xclip -i
+    cat $1 | xclip -i -selection clipboard
 }
 
 # Environment Variables
