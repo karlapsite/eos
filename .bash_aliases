@@ -91,6 +91,20 @@ function wrap_copy()
     cat $1 | xclip -i
 }
 
+# Usage: br N
+# Output: the combined diff of the last N commits
+function wrap_bt()
+{
+    git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD
+}
+
+# Usage: df N
+# Output: the diff from N commits ago
+function wrap_df()
+{
+    git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD`for ((i=0; i<$(($1-1)); ++i)); do echo -n ^; done;`
+}
+
 # Environment Variables
 export EDITOR="vim"
 
@@ -110,6 +124,8 @@ alias make='wrap_make'
 alias dts='wrap_dts'
 alias dtb='wrap_dtb'
 alias copy='wrap_copy'
+alias bt='wrap_bt'
+alias df='wrap_df'
 
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
