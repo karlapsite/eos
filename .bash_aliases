@@ -108,6 +108,8 @@ function wrap_df()
 export EDITOR="vim"
 
 # Aliases
+alias sudo='sudo '
+
 # Startup
 alias rc='vim ~/.bashrc'
 alias rcs='vim ~/.bashrc && source ~/.bashrc'

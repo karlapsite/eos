@@ -25,3 +25,6 @@ if [[ ! -d ~/.vim/bundle/vim-sleuth ]]; then
     git clone git://github.com/tpope/vim-sleuth.git                 ~/.vim/bundle/vim-sleuth
 fi
 
+sudo rm /usr/lib/git-core/git-sh-prompt
+sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+
