@@ -18,6 +18,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-sleuth'
+Plugin 'jtratner/vim-flavored-markdown'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
@@ -68,4 +69,9 @@ colorscheme solarized
 
 " Enable ctags (Search up parent directories until it finds 'tags')
 set tags=tags;
+
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
 

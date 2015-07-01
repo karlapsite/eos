@@ -118,6 +118,18 @@ alias rcas='vim ~/.bash_aliases && source ~/.bash_aliases'
 alias rcam='vim ~/.more_bash_aliases'
 alias rcams='vim ~/.more_bash_aliases && source ~/.bash_aliases'
 
+# Vim Things
+alias vis='vim ~/.vimrc'
+
+# Tmux things
+alias tmux='tmux -2' #256 color support
+alias tms='vim ~/.tmux.conf'
+alias tma='tmux attach -t 0'
+
+# Grub Things
+alias 40grub='sudo vi /etc/grub.d/40_custom && sudo update-grub'
+alias grubdef='sudo vi /etc/default/grub && sudo update-grub'
+
 # Tools
 alias ack='ack-grep'
 
