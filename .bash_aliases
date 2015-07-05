@@ -90,10 +90,26 @@ function wrap_copy()
     cat $1 | xclip -i -selection clipboard
 }
 
+# Usage: br N
+# Output: the combined diff of the last N commits
+function wrap_bt()
+{
+    git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD
+}
+
+# Usage: df N
+# Output: the diff from N commits ago
+function wrap_df()
+{
+    git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD`for ((i=0; i<$(($1-1)); ++i)); do echo -n ^; done;`
+}
+
 # Environment Variables
 export EDITOR="vim"
 
 # Aliases
+alias sudo='sudo '
+
 # Startup
 alias rc='vim ~/.bashrc'
 alias rcs='vim ~/.bashrc && source ~/.bashrc'
@@ -102,6 +118,18 @@ alias rcas='vim ~/.bash_aliases && source ~/.bash_aliases'
 alias rcam='vim ~/.more_bash_aliases'
 alias rcams='vim ~/.more_bash_aliases && source ~/.bash_aliases'
 
+# Vim Things
+alias vis='vim ~/.vimrc'
+
+# Tmux things
+alias tmux='tmux -2' #256 color support
+alias tms='vim ~/.tmux.conf'
+alias tma='tmux attach -t 0'
+
+# Grub Things
+alias 40grub='sudo vi /etc/grub.d/40_custom && sudo update-grub'
+alias grubdef='sudo vi /etc/default/grub && sudo update-grub'
+
 # Tools
 alias ack='ack-grep'
 
@@ -109,6 +137,8 @@ alias make='wrap_make'
 alias dts='wrap_dts'
 alias dtb='wrap_dtb'
 alias copy='wrap_copy'
+alias bt='wrap_bt'
+alias df='wrap_df'
 
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin

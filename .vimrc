@@ -18,6 +18,7 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-sleuth'
+Plugin 'jtratner/vim-flavored-markdown'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
@@ -30,6 +31,8 @@ set number
 set wrap
 set linebreak
 set nolist  " list will disable linebreak
+nmap <up> gk
+nmap <down> gj
 
 " Tab Kernoodeling
 set tabstop=4    " tab is interpreted as 4 spaces (still is \t)
@@ -41,12 +44,12 @@ set textwidth=0
 set wrapmargin=0
 
 " Pressing ,ss will toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+nmap <leader>ss :setlocal spell!<cr>
 
-map <leader>sn ]s
-map <leader>sp {s
-map <leader>sa zg
-map <leader>s? z=
+nmap <leader>sn ]s
+nmap <leader>sp {s
+nmap <leader>sa zg
+nmap <leader>s? z=
 
 " Let the mouse move the cursor
 set mouse=n
@@ -95,3 +98,8 @@ let g:tagbar_type_go = {
     \ 'ctagsbin'  : 'gotags',
     \ 'ctagsargs' : '-sort -silent'
 \ }"
+
+augroup markdown
+    au!
+    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+augroup END
