@@ -28,6 +28,10 @@ fi
 if [[ ! -d ~/.vim/bundle/vim-flavored-markdown ]]; then
     git clone git://github.com/jtratner/vim-flavored-markdown.git   ~/.vim/bundle/vim-flavored-markdown
 fi
+if [[ ! -d ~/.vim/github.com/scrooloose/syntastic ]]; then
+    git clone git://github.com/scrooloose/syntastic                 ~/.vim/bundle/syntastic
+fi
+
 
 sudo rm /usr/lib/git-core/git-sh-prompt
 sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt

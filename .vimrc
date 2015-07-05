@@ -19,10 +19,14 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-sleuth'
 Plugin 'jtratner/vim-flavored-markdown'
+"Plugin 'nvie/vim-flake8'
+Plugin 'scrooloose/syntastic'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+let mapleader=","
 
 " Add Line Numbers
 set number
@@ -103,3 +107,22 @@ augroup markdown
     au!
     au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
 augroup END
+
+" Syntastic {{{
+let g:syntastic_enable_signs = 1
+let g:syntastic_enable_baloon = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_java_checkers = ['javac']
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_style_error_symbol = 'E>'
+let g:syntastic_style_warning_symbol = 'W>'
+let g:syntastic_mode_map = {
+            \ "mode": "active",
+            \ "active_filetypes": [],
+            \ "passive_filetypes": ['java', 'html', 'rst']
+            \ }
+let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
+
+nnoremap <leader>c :SyntasticCheck<cr>
+" }}}
