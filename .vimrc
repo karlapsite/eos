@@ -19,6 +19,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-sleuth'
 Plugin 'jtratner/vim-flavored-markdown'
+Plugin 'elzr/vim-json'
 "Plugin 'nvie/vim-flake8'
 Plugin 'scrooloose/syntastic'
 
@@ -126,3 +127,6 @@ let g:syntastic_stl_format = '[%E{%e Errors}%B{, }%W{%w Warnings}]'
 
 nnoremap <leader>c :SyntasticCheck<cr>
 " }}}
+
+" Remove concealment in json files
+let g:vim_json_syntax_conceal = 0
