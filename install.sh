@@ -28,8 +28,8 @@ fi
 if [[ ! -d ~/.vim/bundle/vim-flavored-markdown ]]; then
     git clone git://github.com/jtratner/vim-flavored-markdown.git   ~/.vim/bundle/vim-flavored-markdown
 fi
-if [[ ! -d ~/.vim/github.com/scrooloose/syntastic ]]; then
-    git clone git://github.com/scrooloose/syntastic                 ~/.vim/bundle/syntastic
+if [[ ! -d ~/.vim/bundle/vim-flake8 ]]; then
+    git clone git://github.com/nvie/vim-flake8                      ~/.vim/bundle/vim-flake8
 fi
 
 
