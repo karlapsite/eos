@@ -130,3 +130,4 @@ nnoremap <leader>c :SyntasticCheck<cr>
 
 " Remove concealment in json files
 let g:vim_json_syntax_conceal = 0
+let g:syntastic_python_flake8_quiet_messages = { "regex": "F821" }
