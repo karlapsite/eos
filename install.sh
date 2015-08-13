@@ -32,7 +32,19 @@ if [[ ! -d ~/.vim/bundle/vim-flake8 ]]; then
     git clone git://github.com/nvie/vim-flake8                      ~/.vim/bundle/vim-flake8
 fi
 
+# Check for the gsettings command
+which gsettings &> /dev/null
+if [[ $? -eq 0 ]] ; then
+    # Opening another terminal tab will open to the current directory, instead of ~/
+    gsettings set org.pantheon.terminal.settings follow-last-tab true
+fi
 
-sudo rm /usr/lib/git-core/git-sh-prompt
-sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+# Replace the git-sh-prompt with the copy in this repo
+if [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
+    sudo rm /usr/lib/git-core/git-sh-prompt
+    sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+else
+    echo "git-sh-prompt not found... Ignoring"
+fi
+
 
