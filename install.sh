@@ -34,7 +34,24 @@ fi
 if [[ ! -d ~/.vim/bundle/vim-json ]]; then
     git clone git://github.com/elzr/vim-json.git                    ~/.vim/bundle/vim-json
 fi
+if [[ ! -d ~/.vim/bundle/tabular ]]; then
+    git clone git://github.com/godlygeek/tabular.git                ~/.vim/bundle/tabular
+fi
+if [[ ! -d ~/.vim/bundle/vim-markdown ]]; then
+    git clone git://github.com/plasticboy/vim-markdown.git          ~/.vim/bundle/vim-markdown
+fi
 
-sudo rm /usr/lib/git-core/git-sh-prompt
-sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+# Check for the gsettings command
+which gsettings &> /dev/null
+if [[ $? -eq 0 ]] ; then
+    # Opening another terminal tab will open to the current directory, instead of ~/
+    gsettings set org.pantheon.terminal.settings follow-last-tab true
+fi
 
+# Replace the git-sh-prompt with the copy in this repo
+if [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
+    sudo rm /usr/lib/git-core/git-sh-prompt
+    sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+else
+    echo "git-sh-prompt not found... Ignoring"
+fi

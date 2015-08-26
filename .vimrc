@@ -22,6 +22,8 @@ Plugin 'jtratner/vim-flavored-markdown'
 Plugin 'elzr/vim-json'
 Plugin 'nvie/vim-flake8'
 "Plugin 'scrooloose/syntastic'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
@@ -104,9 +106,16 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }"
 
+let g:vim_markdown_folding_disabled=1
+
 augroup markdown
+    " remove buffer-local auto commands for the current buffer
     au!
-    au BufNewFile,BufRead *.md,*.markdown setlocal filetype=ghmarkdown
+    " hook to run TableFormat when <bar> is entered in insert mode
+    au FileType mkd.markdown exec 'inoremap <bar> <bar><C-O>:TableFormat<CR><C-O>f\|<right>'
+    " Ctrl+\ will run TableFormat in either mode
+    au FileType mkd.markdown exec 'inoremap <C-\> <C-O>:TableFormat<CR>'
+    au FileType mkd.markdown exec 'noremap <silent><C-\> :TableFormat<CR>'
 augroup END
 
 " Remove concealment in json files
@@ -114,3 +123,8 @@ let g:vim_json_syntax_conceal = 0
 
 " Run flake8 whenever we write to a python source file
 autocmd BufWritePost *.py call Flake8()
+
+autocmd BufReadPre *.docx set ro
+autocmd BufReadPost *.docx %!docx2txt
+
+set clipboard=unnamedplus
