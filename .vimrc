@@ -106,7 +106,11 @@ let g:tagbar_type_go = {
     \ 'ctagsargs' : '-sort -silent'
 \ }"
 
+" Stop folding markdown... it's annoying
 let g:vim_markdown_folding_disabled=1
+
+" Remove concealment in json files... just as annoying
+let g:vim_json_syntax_conceal = 0
 
 augroup markdown
     " remove buffer-local auto commands for the current buffer
@@ -118,13 +122,15 @@ augroup markdown
     au FileType mkd.markdown exec 'noremap <silent><C-\> :TableFormat<CR>'
 augroup END
 
-" Remove concealment in json files
-let g:vim_json_syntax_conceal = 0
+augroup python
+    au!
+    " Run flake8 whenever we write to a python source file unless it's an
+    " __init__.py which causes issues
+    au BufWritePost *.py if @% !~ '__init__.py' | call Flake8()
+augroup END
 
-" Run flake8 whenever we write to a python source file
-autocmd BufWritePost *.py call Flake8()
-
-autocmd BufReadPre *.docx set ro
-autocmd BufReadPost *.docx %!docx2txt
-
-set clipboard=unnamedplus
+augroup worddoc
+    au!
+    au BufReadPre *.docx set ro
+    au BufReadPost *.docx %!docx2txt
+augroup END
