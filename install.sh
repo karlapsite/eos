@@ -13,6 +13,14 @@ replace .bash_logout
 replace .vimrc
 replace .tmux.conf
 
+# Replace the git-sh-prompt with the copy in this repo
+if [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
+    sudo rm /usr/lib/git-core/git-sh-prompt
+    sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
+else
+    echo "git-sh-prompt not found... Ignoring"
+fi
+
 if [[ ! -d ~/.vim/bundle/Vundle.vim ]]; then
     git clone https://github.com/gmarik/Vundle.vim.git              ~/.vim/bundle/Vundle.vim
 fi
@@ -40,18 +48,34 @@ fi
 if [[ ! -d ~/.vim/bundle/vim-markdown ]]; then
     git clone git://github.com/plasticboy/vim-markdown.git          ~/.vim/bundle/vim-markdown
 fi
+if [[ ! -d ~/.vim/bundle/vim-airline ]] || [[ ! -d ~/.fonts/ ]]; then
+    git clone https://github.com/bling/vim-airline                  ~/.vim/bundle/vim-airline
+
+    # After installing vim-arline, we want to get the cool fonts
+    mkdir -p ~/.fonts/
+
+    # Move into the folder and get the updated fonts
+    # TODO: Get rid of the cd
+    cd ~/.fonts/
+    wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
+    wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
+
+    # Make it a possible font directory
+    sudo mkfontscale
+    sudo mkfontdir
+
+    xset +fp ~/.fonts/
+
+    # Update the font cache
+    sudo fc-cache -vf ~/.fonts/
+fi
+if [[ ! -d ~/.vim/bundle/tagbar ]]; then
+    git clone https://github.com/majutsushi/tagbar                  ~/.vim/bundle/tagbar
+fi
 
 # Check for the gsettings command
 which gsettings &> /dev/null
 if [[ $? -eq 0 ]] ; then
     # Opening another terminal tab will open to the current directory, instead of ~/
     gsettings set org.pantheon.terminal.settings follow-last-tab true
-fi
-
-# Replace the git-sh-prompt with the copy in this repo
-if [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
-    sudo rm /usr/lib/git-core/git-sh-prompt
-    sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
-else
-    echo "git-sh-prompt not found... Ignoring"
 fi

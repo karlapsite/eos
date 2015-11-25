@@ -104,6 +104,11 @@ function wrap_df()
     git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD`for ((i=0; i<$(($1-1)); ++i)); do echo -n ^; done;`
 }
 
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
 # Environment Variables
 export EDITOR="vim"
 

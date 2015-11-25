@@ -24,10 +24,23 @@ Plugin 'nvie/vim-flake8'
 "Plugin 'scrooloose/syntastic'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'bling/vim-airline'
+Plugin 'majutsushi/tagbar'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
 filetype plugin indent on    " required
+
+" Make Airline work...... ._.
+set laststatus=2
+
+" Pretty fonts!
+" let g:airline_powerline_fonts = 1
+" Some default settings that modify the statusline
+" Not sure what these do to be honest here
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
 
 let mapleader=","
 
@@ -76,45 +89,53 @@ colorscheme solarized
 
 " Enable ctags (Search up parent directories until it finds 'tags')
 set tags=tags;
+" Alt + ] will open the definition in a new tab
+execute "set <A-]>=\e]"
+nmap <A-]> :vsp <CR> <C-w><C-w> :exec("tag ".expand("<cword>"))<CR>
 
-" gotags
-let g:tagbar_type_go = {
-    \ 'ctagstype' : 'go',
-    \ 'kinds'     : [
-        \ 'p:package',
-        \ 'i:imports:1',
-        \ 'c:constants',
-        \ 'v:variables',
-        \ 't:types',
-        \ 'n:interfaces',
-        \ 'w:fields',
-        \ 'e:embedded',
-        \ 'm:methods',
-        \ 'r:constructor',
-        \ 'f:functions'
-    \ ],
-    \ 'sro' : '.',
-    \ 'kind2scope' : {
-        \ 't' : 'ctype',
-        \ 'n' : 'ntype'
-    \ },
-    \ 'scope2kind' : {
-        \ 'ctype' : 't',
-        \ 'ntype' : 'n'
-    \ },
-    \ 'ctagsbin'  : 'gotags',
-    \ 'ctagsargs' : '-sort -silent'
-\ }"
+augroup go
+    au!
+    " gotags
+    let g:tagbar_type_go = {
+        \ 'ctagstype' : 'go',
+        \ 'kinds'     : [
+            \ 'p:package',
+            \ 'i:imports:1',
+            \ 'c:constants',
+            \ 'v:variables',
+            \ 't:types',
+            \ 'n:interfaces',
+            \ 'w:fields',
+            \ 'e:embedded',
+            \ 'm:methods',
+            \ 'r:constructor',
+            \ 'f:functions'
+        \ ],
+        \ 'sro' : '.',
+        \ 'kind2scope' : {
+            \ 't' : 'ctype',
+            \ 'n' : 'ntype'
+        \ },
+        \ 'scope2kind' : {
+            \ 'ctype' : 't',
+            \ 'ntype' : 'n'
+        \ },
+        \ 'ctagsbin'  : 'gotags',
+        \ 'ctagsargs' : '-sort -silent'
+    \ }"
+augroup END
 
-" Stop folding markdown... it's annoying
-let g:vim_markdown_folding_disabled=1
-
-" Remove concealment in json files... just as annoying
-let g:vim_json_syntax_conceal = 0
+augroup json
+    au!
+    " Remove concealment in json files... just as annoying
+    let g:vim_json_syntax_conceal = 0
+augroup END
 
 augroup markdown
-    " remove buffer-local auto commands for the current buffer
     au!
+    " Stop folding markdown... it's annoying
+    let g:vim_markdown_folding_disabled=1
+    " remove buffer-local auto commands for the current buffer
     " hook to run TableFormat when <bar> is entered in insert mode
     au FileType mkd.markdown exec 'inoremap <bar> <bar><C-O>:TableFormat<CR><C-O>f\|<right>'
     " Ctrl+\ will run TableFormat in either mode
@@ -124,6 +145,8 @@ augroup END
 
 augroup python
     au!
+    " Remove trailing whitespace
+    au BufWritePre *.py,*.c :%s/\s\+$//e
     " Run flake8 whenever we write to a python source file unless it's an
     " __init__.py which causes issues
     au BufWritePost *.py if @% !~ '__init__.py' | call Flake8()
@@ -133,4 +156,10 @@ augroup worddoc
     au!
     au BufReadPre *.docx set ro
     au BufReadPost *.docx %!docx2txt
+augroup END
+
+augroup c
+    au!
+    " Remove trailing whitespace
+    au BufWritePre *.h,*.c :%s/\s\+$//e
 augroup END
