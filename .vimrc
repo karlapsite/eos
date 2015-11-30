@@ -31,17 +31,22 @@ Plugin 'majutsushi/tagbar'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+" Set the default encoding to utf-8
+set encoding=utf-8
+
 " Make Airline work...... ._.
 set laststatus=2
+set noshowmode
 
 " Pretty fonts!
-" let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 " Some default settings that modify the statusline
 " Not sure what these do to be honest here
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
 
+" Beginning key for shortcuts
 let mapleader=","
 
 " Add Line Numbers
@@ -89,7 +94,7 @@ colorscheme solarized
 
 " Enable ctags (Search up parent directories until it finds 'tags')
 set tags=tags;
-" Alt + ] will open the definition in a new tab
+" Alt + ] will open the ctags origin/definition in a new tab
 execute "set <A-]>=\e]"
 nmap <A-]> :vsp <CR> <C-w><C-w> :exec("tag ".expand("<cword>"))<CR>
 
@@ -127,13 +132,13 @@ augroup END
 
 augroup json
     au!
-    " Remove concealment in json files... just as annoying
+    " Remove concealment in json files... it's annoying
     let g:vim_json_syntax_conceal = 0
 augroup END
 
 augroup markdown
     au!
-    " Stop folding markdown... it's annoying
+    " Stop folding markdown... just as annoying
     let g:vim_markdown_folding_disabled=1
     " remove buffer-local auto commands for the current buffer
     " hook to run TableFormat when <bar> is entered in insert mode
