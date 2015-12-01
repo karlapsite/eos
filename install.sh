@@ -14,8 +14,8 @@ replace .vimrc
 replace .tmux.conf
 
 # Replace the git-sh-prompt with the copy in this repo
-if [[ -f /usr/lib/git-core/git-sh-prompt ]] ; then
-    sudo rm /usr/lib/git-core/git-sh-prompt
+if [[ -f /usr/lib/git-core/git-sh-prompt || -L /usr/lib/git-core/git-sh-prompt ]]; then
+    sudo rm -f /usr/lib/git-core/git-sh-prompt
     sudo ln -s `pwd`/Scripts/git-sh-prompt /usr/lib/git-core/git-sh-prompt
 else
     echo "git-sh-prompt not found... Ignoring"
@@ -50,24 +50,6 @@ if [[ ! -d ~/.vim/bundle/vim-markdown ]]; then
 fi
 if [[ ! -d ~/.vim/bundle/vim-airline ]] || [[ ! -d ~/.fonts/ ]]; then
     git clone https://github.com/bling/vim-airline                  ~/.vim/bundle/vim-airline
-
-    # After installing vim-arline, we want to get the cool fonts
-    mkdir -p ~/.fonts/
-
-    # Move into the folder and get the updated fonts
-    # TODO: Get rid of the cd
-    cd ~/.fonts/
-    wget https://github.com/powerline/powerline/raw/develop/font/PowerlineSymbols.otf
-    wget https://github.com/powerline/powerline/raw/develop/font/10-powerline-symbols.conf
-
-    # Make it a possible font directory
-    sudo mkfontscale
-    sudo mkfontdir
-
-    xset +fp ~/.fonts/
-
-    # Update the font cache
-    sudo fc-cache -vf ~/.fonts/
 fi
 if [[ ! -d ~/.vim/bundle/tagbar ]]; then
     git clone https://github.com/majutsushi/tagbar                  ~/.vim/bundle/tagbar
