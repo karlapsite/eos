@@ -33,6 +33,9 @@ fi
 if [[ ! -d ~/.vim/bundle/vim-sleuth ]]; then
     git clone git://github.com/tpope/vim-sleuth.git                 ~/.vim/bundle/vim-sleuth
 fi
+if [[ ! -d ~/.vim/bundle/vim-fugitive ]]; then
+    git clone git://github.com/tpope/vim-fugitive.git               ~/.vim/bundle/vim-fugitive
+fi
 if [[ ! -d ~/.vim/bundle/vim-flavored-markdown ]]; then
     git clone git://github.com/jtratner/vim-flavored-markdown.git   ~/.vim/bundle/vim-flavored-markdown
 fi
