@@ -26,6 +26,7 @@ Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'bling/vim-airline'
 Plugin 'majutsushi/tagbar'
+Plugin 'avakhov/vim-yaml'
 
 " Do not add plugins after this line!
 call vundle#end()            " required
@@ -94,9 +95,12 @@ colorscheme solarized
 
 " Enable ctags (Search up parent directories until it finds 'tags')
 set tags=tags;
-" Alt + ] will open the ctags origin/definition in a new tab
-execute "set <A-]>=\e]"
-nmap <A-]> :vsp <CR> <C-w><C-w> :exec("tag ".expand("<cword>"))<CR>
+
+" goto definition, and pop back
+nmap <A-i> <C-]>
+nmap <C-A-i> <C-t>
+
+map <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<' . synIDattr(synID(line("."),col("."),0),"name") . "> lo<" . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 augroup go
     au!

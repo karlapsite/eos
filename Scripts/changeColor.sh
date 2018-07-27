@@ -43,13 +43,17 @@ customized_base01='#58586e6e7575'
 customized_base03='#00001B1B2626'
 customized_solarized_palette='#070746465252:#DCDC32322F2F:#A5A5B9B90000:#B5B589890000:#26264B4BB2B2:#D3D336368282:#2A2AA1A19898:#EEEEE8E8D5D5:#00004B4B5656:#CBCB4B4B1616:#58586E6E7575:#65657B7B8383:#838394949696:#6C6C7171C4C4:#9393A1A1A1A1:#FDFDF6F6E3E3'
 
+# Charizard
+charizard_back_color='#1a1f25'
+charizard_fore_color='#e0e0e0'
+charizard_palette='#2c313b:#b83312:#5fa03a:#ff843b:#8191b8:#e35b92:#5e8d87:#7b7b8a:#3c4858:#cc6666:#b5bd68:#ffc76b:#81a2be:#9876aa:#609c8c:#b3b3b3'
+
 case $1 in
     def* )
         echo "Changing to Default Scheme (Pantheon)"
-        gsettings set org.pantheon.terminal.settings background '#101010'
-        gsettings set org.pantheon.terminal.settings foreground '#f2f2f2'
-        gsettings set org.pantheon.terminal.settings cursor-color '#FFFFFF'
-        gsettings set org.pantheon.terminal.settings palette $default_palette
+        gsettings reset org.pantheon.terminal.settings background
+        gsettings reset org.pantheon.terminal.settings foreground
+        gsettings reset org.pantheon.terminal.settings palette
         ;;
     light|Light ) # light
         echo "Changing to Light Scheme (Solarized)"
@@ -64,6 +68,13 @@ case $1 in
         gsettings set org.pantheon.terminal.settings foreground $base0
         gsettings set org.pantheon.terminal.settings cursor-color $base0
         gsettings set org.pantheon.terminal.settings palette $solarized_palette
+        ;;
+    char* ) # charizard
+        echo "Changing to Charizard"
+        gsettings set org.pantheon.terminal.settings background $charizard_back_color
+        gsettings set org.pantheon.terminal.settings foreground $charizard_fore_color
+        gsettings set org.pantheon.terminal.settings cursor-color $charizard_fore_color
+        gsettings set org.pantheon.terminal.settings palette $charizard_palette
         ;;
     cus*l*|l*cus* ) # customized light
         echo "Changing to Customized Light Scheme (Solarized)"

@@ -104,6 +104,34 @@ function wrap_df()
     git diff HEAD`for ((i=0; i<$1; ++i)); do echo -n ^; done;` HEAD`for ((i=0; i<$(($1-1)); ++i)); do echo -n ^; done;`
 }
 
+function wrap_tree()
+{
+    if [[ -f /tmp/tree ]]; then
+        $(which tree) $*
+    else
+        touch /tmp/tree
+        cat <<EOF
+               * *
+            *    *  *
+       *  *    *     *  *
+      *     *    *  *    *
+    *   *    *    *    *   *
+  *     *  *    * * .#  *   *
+  *   *     * #.  .# *   *
+   *     "#.  #: #" * *    *
+     *   * * "#. ##"     *
+      *       "###
+              "##
+               ##.
+               .##:
+               :###
+               ;###
+             ,####.
+/\\/\\/\\/\\/\\/.######.\\/\\/\\/\\/\\/\\
+EOF
+    fi
+}
+
 pathadd() {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
         PATH="${PATH:+"$PATH:"}$1"
@@ -116,24 +144,24 @@ export EDITOR="vim"
 alias sudo='sudo '
 
 # Startup
-alias rc='vim ~/.bashrc'
-alias rcs='vim ~/.bashrc && source ~/.bashrc'
-alias rca='vim ~/.bash_aliases'
-alias rcas='vim ~/.bash_aliases && source ~/.bash_aliases'
-alias rcam='vim ~/.more_bash_aliases'
-alias rcams='vim ~/.more_bash_aliases && source ~/.bash_aliases'
+alias rc='nvim ~/.bashrc'
+alias rcs='nvim ~/.bashrc && source ~/.bashrc'
+alias rca='nvim ~/.bash_aliases'
+alias rcas='nvim ~/.bash_aliases && source ~/.bash_aliases'
+alias rcam='nvim ~/.more_bash_aliases'
+alias rcams='nvim ~/.more_bash_aliases && source ~/.bash_aliases'
 
 # Vim Things
-alias vis='vim ~/.vimrc'
+alias vis='nvim ~/.vimrc'
 
 # Tmux things
 alias tmux='tmux -2' #256 color support
-alias tms='vim ~/.tmux.conf'
+alias tms='nvim ~/.tmux.conf'
 alias tma='tmux attach -t 0'
 
 # Grub Things
-alias 40grub='sudo vi /etc/grub.d/40_custom && sudo update-grub'
-alias grubdef='sudo vi /etc/default/grub && sudo update-grub'
+alias 40grub='sudo nvim /etc/grub.d/40_custom && sudo update-grub'
+alias grubdef='sudo nvim /etc/default/grub && sudo update-grub'
 
 # Tools
 alias ack='ack-grep'
@@ -144,6 +172,10 @@ alias dtb='wrap_dtb'
 alias copy='wrap_copy'
 alias bt='wrap_bt'
 alias df='wrap_df'
+alias tree='wrap_tree'
+alias realtree=$(which tree)
+
+alias serve='hostname -I && python -m SimpleHTTPServer'
 
 if [ -d /usr/local/go/bin ]; then
     export PATH=$PATH:/usr/local/go/bin
@@ -156,7 +188,11 @@ fi
 
 # Directory traversal
 alias github='mkdir -p ~/Github && cd ~/Github'
-cat <<EOF
+
+
+if [[ ! -f /tmp/hello ]]; then
+    touch /tmp/hello
+    cat <<EOF
                                                        ..       :
                     .                  .               .   .  .
       .           .                .               .. .  .  *
@@ -171,10 +207,11 @@ cat <<EOF
                  .  .    . *.   . .
     .                   :.  .           .
                  .   .    .    .
-             .  .  .    ./|\\
-            .  .. :.    . |             .               .
-     .   ... .            |
- .    :.  . .   *.        |     .               .
-   .  *.             You are here.
+             .  .  .    . ↑
+            .  .. :. You are here.      .               .
+     .   ... .
+ .    :.  . .   *.              .               .
+   .  *.
  . .    .               .             *.                         .
 EOF
+fi

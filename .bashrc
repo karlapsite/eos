@@ -69,13 +69,14 @@ set_bash_prompt()
 {
     if [ "$color_prompt" = yes ]; then
         RESET='\[\e[0m\]'
-        C11='\[\e[1;32m\]'
-        C13='\[\e[1;34m\]'
+        C11='\[\e[0;33m\]'
+        C13='\[\e[1;35m\]'
         export GIT_PS1_SHOWCOLORHINTS=1
         PS1="${debian_chroot:+($debian_chroot)}$C11\u@\h$RESET $C13\w$RESET$(__git_ps1 ' (%s)')$RESET\$ "
     else
         PS1="${debian_chroot:+($debian_chroot)}\u@\h:\w$(__git_ps1 ':(%s)')\$ "
     fi
+    echo -en "\033]0;$(pwd | sed 's,'$HOME',~,') \a"
 }
 
 # This tells bash to reinterpret PS1 after every command, which we need because
